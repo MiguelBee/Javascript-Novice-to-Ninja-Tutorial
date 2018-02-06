@@ -13,7 +13,7 @@ quiz = {
 var $question = document.getElementById("question");
 var $score = document.getElementById("score");
 var $feedback = document.getElementById("feedback");
-
+var $start = document.getElementById("button"); 
 
 
 ///view functions///
@@ -30,7 +30,10 @@ function update(element, content, klass) {
 	}
 }
 
-play(quiz);
+//Event Listeners
+$start.addEventListener("click", function(){
+	play(quiz)
+}, false);
 
 ///function definitions///
 
@@ -40,7 +43,6 @@ function play(quiz) {
 
 	//main game loop
 	for(i=0, question, answer, max=quiz.questions.length; i <max; i++){
-		update($score, score);
 		var question = quiz.questions[i].question;
 		var answer = ask(question);
 		check(answer);
