@@ -1,4 +1,4 @@
-quiz = {
+var quiz = {
 	"name" : "Super Hero Name Quiz", 
 	"description": "How many super hereos can you name?", 
 	"question": "What is the real name of ",
@@ -9,11 +9,12 @@ quiz = {
 	]
 }
 
-//// dom references///
+//// dom references///views
 var $question = document.getElementById("question");
 var $score = document.getElementById("score");
 var $feedback = document.getElementById("feedback");
-var $start = document.getElementById("button"); 
+var $start = document.getElementById("start");
+var $form = document.getElementById("answer");
 
 
 ///view functions///
@@ -30,32 +31,48 @@ function update(element, content, klass) {
 	}
 }
 
+//helper functions
+
+function hide(element) {
+  element.style.display = "none";
+}
+function show(element){
+	element.style.display = "block";
+}
+
 //Event Listeners
-$start.addEventListener("click", function(){
-	play(quiz)
-}, false);
+$start.addEventListener('click', function() { play(quiz) } , false);
+
+//hide the form at the start of the game
+hide($form);	
 
 ///function definitions///
 
-function play(quiz) {
-	var score = 0 //initialized score
-	update($score, score);
-
-	//main game loop
-	for(i=0, question, answer, max=quiz.questions.length; i <max; i++){
-		var question = quiz.questions[i].question;
-		var answer = ask(question);
-		check(answer);
-	}
-	//end of game loop
-	gameOver();
-
-
+function play(quiz){
+  var score = 0 // initialize score
+  update($score,score);
+  // hide button and show form
+  hide($start);
+  show($form);
+  // add event listener to form for when it's submitted
+  $form.addEventListener('submit', function(event) { 
+    event.preventDefault();
+    check($form[0].value);
+    }, false);
+  var i = 0;
+  chooseQuestion();
+	
 	// nested functions//
+
+	function chooseQuestion(){
+		var question = quiz.questions[i].question;
+		ask(question);
+	}
 
 	function ask(question) {
 		update($question, quiz.question + question); // quiz[i][0] is the i'th question
-		return prompt("Enter Your Answer:");
+		$form[0].value = "";
+		$form[0].focus();
 	}
 
 	function check(answer){
@@ -66,11 +83,20 @@ function play(quiz) {
 		} else {
 			update($feedback, "Wrong!", "wrong");
 		}
+		i++;
+		if(i === quiz.questions.length){
+			gameOver();
+		} else {
+			chooseQuestion();
+		}
 	}
 	
 	function gameOver(){
 		//inform the player that the game has finished and tell
 		//how many points scored
 		update($question, "Game Over, you scored " + score + " points");
+				//player can play again
+		hide($form);
+		show($start);
 	}
 }
