@@ -1,3 +1,5 @@
+(function() {
+"use strict";
 var quiz = {
 	"name" : "Super Hero Name Quiz", 
 	"description": "How many super hereos can you name?", 
@@ -69,17 +71,20 @@ function play(quiz){
 	// nested functions//
 
 	function chooseQuestion(){
+		console.log("chooseQuestion() invoked");
 		var question = quiz.questions[i].question;
 		ask(question);
 	}
 
 	function ask(question) {
+		console.log("ask() invoked");
 		update($question, quiz.question + question); // quiz[i][0] is the i'th question
 		$form[0].value = "";
 		$form[0].focus();
 	}
 
 	function check(answer){
+		console.log("check() invoked");
 		if(answer === quiz.questions[i].answer) {
 			update($feedback, "Correct!", 'right');
 			score++ ;
@@ -96,6 +101,7 @@ function play(quiz){
 	}
 	
 	function gameOver(){
+		console.log("gameOver() invoked");
 		//inform the player that the game has finished and tell
 		//how many points scored
 		update($question, "Game Over, you scored " + score + " points");
@@ -118,3 +124,4 @@ function play(quiz){
 		}
 	}
 }
+}())
