@@ -22,6 +22,7 @@ function getQuiz(){
   var $start = document.getElementById("start");
   var $form = document.getElementById("answer");
   var $timer = document.getElementById("timer");
+  var $hiScore = document.getElementById("hiScore");
 
   /// view functions ///
 
@@ -67,6 +68,7 @@ function getQuiz(){
   	this.phrase = quiz.question;
   	this.score = 0; //initializing the score
   	update($score, this.score);
+    update($hiScore, this.hiScore());
   	//initialize the timer and do interval that counts down
   	this.time = 20;
   	update($timer, this.time);
@@ -162,5 +164,18 @@ function getQuiz(){
       window.clearInterval(this.interval);
       hide($form);
       show($start);
+    }
+
+    Game.prototype.hiScore = function(){
+      if(window.localStorage){
+        //the value held in localstorage is initially null so make it 0
+        var hi = localStorage.getItem($hiScore) || 0;
+        //check if the hi score has been beaten and display a message
+        if(this.score > hi || hi === 0){
+          localStorage.setItem($hiScore, this.score);
+          update($hiScore, this.score)
+        }
+        return localStorage.getItem($hiScore);
+      }
     }
 }())
