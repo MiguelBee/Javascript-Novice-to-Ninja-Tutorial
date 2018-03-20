@@ -1,0 +1,28 @@
+{
+  "name": "quiz_ninja",
+  "version": "1.0.0",
+  "description": "superhero game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiguelBee/JsQuiz.git"
+  },
+  "keywords": [
+    "superheroes"
+  ],
+  "author": "miguel bustamante",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiguelBee/JsQuiz/issues"
+  },
+  "homepage": "https://github.com/MiguelBee/JsQuiz#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-uglify": "^3.0.0",
+    "ws": "3.3.2"
+  }
+}
